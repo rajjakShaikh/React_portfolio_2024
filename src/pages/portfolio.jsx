@@ -18,7 +18,9 @@ export default function Portfolio() {
       <div className="grid grid-cols-2 gap-4 mt-5">
         {/* Project Info on the left */}
         <div className="text-white">
-          <h2 className="text-[24px] font-semibold mb-4">Food E-Commerce UI</h2>
+          <h2 className="text-[24px] font-semibold mb-4">
+            Food E-Cosmmerce UI
+          </h2>
           <p className="text-[18px] mb-3">
             This project is a fully responsive e-commerce UI designed for a food
             delivery service. It includes a clean and modern design,
@@ -55,7 +57,7 @@ export default function Portfolio() {
       <div className="grid grid-cols-2 gap-4 mt-5">
         {/* Project Info on the left */}
         <div className="text-white">
-          <h2 className="text-[24px] font-semibold mb-4">Food E-Commerce UI</h2>
+          <h2 className="text-[24px] font-semibold mb-4">Medicca Press</h2>
           <p className="text-[18px] mb-3">
             This project is a fully responsive e-commerce UI designed for a food
             delivery service. It includes a clean and modern design,

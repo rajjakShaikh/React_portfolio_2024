@@ -8,9 +8,8 @@ import DotRing from "./pages/DotRing";
 
 function App() {
   return (
-    <>
+    <div className="cursor-none">
       <DotRing />
-
       <Sidebar>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -19,7 +18,7 @@ function App() {
           <Route path="/portfolio" element={<Portfolio />} />
         </Routes>
       </Sidebar>
-    </>
+    </div>
   );
 }
 

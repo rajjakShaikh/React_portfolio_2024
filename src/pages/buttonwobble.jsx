@@ -3,7 +3,9 @@ import React from "react";
 export default function Buttonwobble({ module, className }) {
   return (
     <>
-      <button className={`blob-btn mx-auto px-10 py-3 w-full ${className}`}>
+      <button
+        className={`blob-btn mx-auto px-10 py-3 w-full wobble-effect ${className}`}
+      >
         {module}
         <span className="blob-btn__inner">
           <span className="blob-btn__blobs">
@@ -33,6 +35,36 @@ export default function Buttonwobble({ module, className }) {
           </filter>
         </defs>
       </svg>
+
+      <style jsx>{`
+        @keyframes wobble {
+          0% {
+            transform: translateX(0%);
+          }
+          15% {
+            transform: translateX(-25%) rotate(-5deg);
+          }
+          30% {
+            transform: translateX(20%) rotate(3deg);
+          }
+          45% {
+            transform: translateX(-15%) rotate(-3deg);
+          }
+          60% {
+            transform: translateX(10%) rotate(2deg);
+          }
+          75% {
+            transform: translateX(-5%) rotate(-1deg);
+          }
+          100% {
+            transform: translateX(0%);
+          }
+        }
+
+        .wobble-effect:hover {
+          animation: wobble 0.8s ease-in-out;
+        }
+      `}</style>
     </>
   );
 }

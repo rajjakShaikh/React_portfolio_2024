@@ -2,9 +2,14 @@
 const flowbite = require("flowbite-react/tailwind");
 
 export default {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}", flowbite.content()],
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: "#1e293b",
+        secondary: "#0f172a",
+      },
+    },
   },
-  plugins: [flowbite.plugin()],
+  plugins: [],
 };

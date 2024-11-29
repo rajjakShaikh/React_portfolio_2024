@@ -1,172 +1,299 @@
-import React from "react";
+import { useEffect, useRef, useState } from "react";
+import * as THREE from "three";
+import { motion } from "framer-motion";
 
 export default function About() {
+  const mountRef = useRef(null);
+
+  useEffect(() => {
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(
+      75,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      1000
+    );
+    const renderer = new THREE.WebGLRenderer({
+      alpha: true,
+      antialias: true,
+      powerPreference: "high-performance",
+    });
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1;
+    mountRef.current.appendChild(renderer.domElement);
+
+    // Create main galaxy
+    const galaxyGeometry = new THREE.BufferGeometry();
+    const galaxyMaterial = new THREE.PointsMaterial({
+      size: 0.02,
+      sizeAttenuation: true,
+      vertexColors: true,
+      transparent: true,
+      blending: THREE.AdditiveBlending,
+      opacity: 0.8,
+    });
+
+    const particlesCount = 15000;
+    const positions = new Float32Array(particlesCount * 3);
+    const colors = new Float32Array(particlesCount * 3);
+
+    for (let i = 0; i < particlesCount; i++) {
+      // Enhanced spiral galaxy with more complex structure
+      const radius = Math.random() * 8;
+      const spinAngle = radius * 5;
+      const branchAngle = ((i % 6) * Math.PI * 2) / 6;
+
+      // More natural distribution
+      const randomX =
+        Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * 0.5;
+      const randomY =
+        Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * 0.5;
+      const randomZ =
+        Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * 0.5;
+
+      positions[i * 3] = Math.cos(branchAngle + spinAngle) * radius + randomX;
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 0.5 + randomY;
+      positions[i * 3 + 2] =
+        Math.sin(branchAngle + spinAngle) * radius + randomZ;
+
+      // Enhanced color gradient
+      const mixedColor = new THREE.Color();
+      const insideColor = new THREE.Color("#ff6030");
+      const middleColor = new THREE.Color("#1b3984");
+      const outsideColor = new THREE.Color("#0c1445");
+
+      if (radius < 3) {
+        mixedColor.lerpColors(insideColor, middleColor, radius / 3);
+      } else {
+        mixedColor.lerpColors(middleColor, outsideColor, (radius - 3) / 5);
+      }
+
+      colors[i * 3] = mixedColor.r;
+      colors[i * 3 + 1] = mixedColor.g;
+      colors[i * 3 + 2] = mixedColor.b;
+    }
+
+    galaxyGeometry.setAttribute(
+      "position",
+      new THREE.BufferAttribute(positions, 3)
+    );
+    galaxyGeometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+
+    const galaxy = new THREE.Points(galaxyGeometry, galaxyMaterial);
+    scene.add(galaxy);
+    camera.position.z = 5;
+    camera.position.y = 1;
+
+    // Add floating particles
+    const floatingParticlesCount = 2000;
+    const floatingGeometry = new THREE.BufferGeometry();
+    const floatingPositions = new Float32Array(floatingParticlesCount * 3);
+
+    for (let i = 0; i < floatingParticlesCount; i++) {
+      floatingPositions[i * 3] = (Math.random() - 0.5) * 20;
+      floatingPositions[i * 3 + 1] = (Math.random() - 0.5) * 20;
+      floatingPositions[i * 3 + 2] = (Math.random() - 0.5) * 20;
+    }
+
+    floatingGeometry.setAttribute(
+      "position",
+      new THREE.BufferAttribute(floatingPositions, 3)
+    );
+    const floatingMaterial = new THREE.PointsMaterial({
+      size: 0.01,
+      color: "#ffffff",
+      transparent: true,
+      opacity: 0.4,
+      blending: THREE.AdditiveBlending,
+    });
+
+    const floatingParticles = new THREE.Points(
+      floatingGeometry,
+      floatingMaterial
+    );
+    scene.add(floatingParticles);
+
+    // Enhanced mouse interaction
+    const mouse = new THREE.Vector2();
+    const targetRotation = new THREE.Vector2(0, 0);
+    const handleMouseMove = (event) => {
+      mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+      targetRotation.x = mouse.y * 0.3;
+      targetRotation.y = mouse.x * 0.3;
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+
+    // Smooth animation
+    const animate = () => {
+      requestAnimationFrame(animate);
+
+      // Smooth rotation
+      galaxy.rotation.y += (targetRotation.y - galaxy.rotation.y) * 0.05;
+      galaxy.rotation.x += (targetRotation.x - galaxy.rotation.x) * 0.05;
+
+      // Constant rotation
+      galaxy.rotation.y += 0.0003;
+      galaxy.rotation.z += 0.0001;
+
+      // Floating particles animation
+      floatingParticles.rotation.y -= 0.0001;
+      floatingParticles.rotation.x += 0.0001;
+
+      renderer.render(scene, camera);
+    };
+    animate();
+
+    const handleResize = () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    };
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("mousemove", handleMouseMove);
+      mountRef.current?.removeChild(renderer.domElement);
+    };
+  }, []);
+
+  const fadeInUp = {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.6 },
+  };
+
   return (
-    <>
-      <div className="mx-10">
-        <div className="grid grid-cols-1 place-items-center mt-20 border-b-2 border-gray-300">
-          <h1 className="font-medium text-yellow-400  text-[40px]">
-            {" "}
-            About <span className="text-white text-[40px] font-medium">
-              Me
-            </span>{" "}
-          </h1>
-        </div>
+    <div className="relative min-h-screen bg-gradient-to-b from-[#0a0a0a] via-[#111827] to-[#1a1a1a]">
+      <div ref={mountRef} className="absolute inset-0 -z-10" />
 
-        <div className="grid grid-cols-2 mt-5">
-          <div>
-            <h1 className="text-white font-medium text-[22px] mb-3">
-              Name :{" "}
-              <span className=" font-medium text-yellow-400 text-[22px]">
-                shaikh rajjak
-              </span>{" "}
-            </h1>
-            <h1 className="text-white font-medium text-[22px]  mb-3">
-              Qualification :{" "}
-              <span className=" font-medium text-yellow-400 text-[22px]">
-                Bachelor in Computer Science
-              </span>{" "}
-            </h1>
-            <h1 className="text-white font-medium text-[22px]  mb-3">
-              Post :{" "}
-              <span className=" font-medium text-yellow-400 text-[22px]">
-                Software Developer
-              </span>{" "}
-            </h1>
-
-            <h1 className="text-white font-medium text-[22px]  mb-3">
-              Language :{" "}
-              <span className=" font-medium text-yellow-400 text-[22px]">
-                Hindi | English | Marathi
-              </span>{" "}
-            </h1>
-
-            <h1 className="text-white font-medium text-[22px]  mb-3">
-              Skills :{" "}
-              <span className=" font-medium text-yellow-400 text-[22px]">
-                Javascript| Rect JS | Next JS |Redux Toolkit | TanStack Query |
-                Html5 | CSS | Tailwind CSS| Bootstrap5 | Github | Wordpress |
-                PHP
-              </span>{" "}
-            </h1>
-            {/* <h1 className="text-white font-medium text-[22px]  mb-3">
-            Soft Skills :{" "}
-            <span className=" font-medium text-yellow-400 text-[22px]">
-              <ul>
-                <li>Strong problem-solving abilities</li>
-                <li>communication skills </li>
-                <li>Team collaboration and leadership</li>
-                <li> Time management and multitasking</li>
-                <li> Attention to detail </li>
-                <li>Adaptability and quick learning</li>
-              </ul>{" "}
-            </span>{" "}
-          </h1> */}
-          </div>
-          <div className="grid grid-cols-2 gap-10">
-            <div className="w-15 h-29 p-5 text-center bg-[#222]">
-              <h1 className="text-yellow-400 font-bold text-[22px]">1.6</h1>
-              <span className="text-white font-medium text-[20px]">
-                Year of Experience <br />
-                <span className="font-light text-[18px] pb-4">
-                  <a
-                    href="https://www.linkedin.com/in/rajjak-shaikh-271216243/details/experience/"
-                    target="_blank"
-                    className="text-blue-700  border-b border-blue-600 hover:text-blue-800 hover:font-medium hover:text-[20px]"
-                  >
-                    {" "}
-                    visit
-                  </a>
-                </span>
-              </span>
-            </div>
-            <div className="w-15 h-29 p-5 text-center bg-[#222]">
-              <h1 className="text-yellow-400  font-bold text-[22px]">5</h1>
-              <span className="text-white font-medium text-[20px]">
-                Project Completed <br />
-                <span className="font-light text-[18px]">
-                  {" "}
-                  <a
-                    href="https://github.com/rajjakShaikh"
-                    target="_blank"
-                    className="text-blue-700 border-b border-blue-600 hover:text-blue-800 hover:font-medium hover:text-[20px]"
-                  >
-                    {" "}
-                    visit
-                  </a>
-                </span>
-              </span>
-            </div>
-
-            <div className="w-15 h-29 p-5 text-center bg-[#222]">
-              <h1 className="text-yellow-400 font-bold text-[22px]">2</h1>
-              <span className="text-white font-medium text-[20px]">
-                Certificate <br />
-                <span className="font-light text-[18px]">
-                  {" "}
-                  <a
-                    href="https://www.linkedin.com/in/rajjak-shaikh-271216243/details/certifications/"
-                    target="_blank"
-                    className="text-blue-700 border-b border-blue-600 hover:text-blue-800 hover:font-medium hover:text-[20px]"
-                  >
-                    {" "}
-                    visit
-                  </a>
-                </span>
-              </span>
-            </div>
-            <div className="w-15 h-29 p-5 text-center bg-[#222]">
-              <h1 className="text-yellow-400  font-bold text-[22px]">5</h1>
-              <span className="text-white font-medium text-[20px]">
-                Project Completed
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 text-center mt-10">
-          <a
-            href="/resumesoftware_Dev_2024.pdf"
-            download
-            className="inline-block"
-          >
-            <button className="blob-btn mx-auto px-6 py-3">
-              Download CV
-              <span className="blob-btn__inner">
-                <span className="blob-btn__blobs">
-                  <span className="blob-btn__blob"></span>
-                  <span className="blob-btn__blob"></span>
-                  <span className="blob-btn__blob"></span>
-                  <span className="blob-btn__blob"></span>
-                </span>
-              </span>
-            </button>
-          </a>
-        </div>
-
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          version="1.1"
-          className="hidden"
+      <div className="container mx-auto px-4 py-10 relative z-10">
+        <motion.div
+          className="text-center mb-10"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
         >
-          <defs>
-            <filter id="goo">
-              <feGaussianBlur
-                in="SourceGraphic"
-                result="blur"
-                stdDeviation="10"
-              ></feGaussianBlur>
-              <feColorMatrix
-                in="blur"
-                mode="matrix"
-                values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 21 -7"
-                result="goo"
-              ></feColorMatrix>
-              <feBlend in2="goo" in="SourceGraphic" result="mix"></feBlend>
-            </filter>
-          </defs>
-        </svg>
+          <h1 className="text-[50px] font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 mb-6 drop-shadow-lg">
+            About Me
+          </h1>
+          <p className="text-gray-300 text-xl max-w-3xl mx-auto leading-relaxed">
+            Passionate software developer with a focus on creating elegant
+            solutions through clean code and intuitive design.
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
+          <motion.div
+            className="glass-card p-8 rounded-2xl"
+            whileHover={{ scale: 1.02 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="space-y-6">
+              <div className="bg-[#1a1a1a]/50 backdrop-blur-sm p-8 rounded-xl hover:shadow-xl transition-all duration-300">
+                <h1 className="text-white font-medium text-[18px] mb-3">
+                  Name:{" "}
+                  <span className="font-medium text-yellow-400 text-[18px]">
+                    shaikh rajjak
+                  </span>
+                </h1>
+                <h1 className="text-white font-medium text-[18px] mb-3">
+                  Qualification:{" "}
+                  <span className="font-medium text-yellow-400 text-[18px]">
+                    Bachelor in Computer Science
+                  </span>
+                </h1>
+                <h1 className="text-white font-medium text-[18px] mb-3">
+                  Post:{" "}
+                  <span className="font-medium text-yellow-400 text-[18px]">
+                    Software Developer
+                  </span>
+                </h1>
+                <h1 className="text-white font-medium text-[18px] mb-3">
+                  Language:{" "}
+                  <span className="font-medium text-yellow-400 text-[18px]">
+                    Hindi | English | Marathi
+                  </span>
+                </h1>
+                <h1 className="text-white font-medium text-[18px] mb-3">
+                  Skills:{" "}
+                  <span className="font-medium text-yellow-400 text-[18px]">
+                    Javascript | React JS | Next JS | Redux Toolkit | TanStack
+                    Query | Html5 | CSS | Tailwind CSS | Bootstrap5 | Github |
+                    Wordpress | PHP
+                  </span>
+                </h1>
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div
+            className="glass-card p-8 rounded-2xl"
+            whileHover={{ scale: 1.02 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="bg-[#1a1a1a]/50 backdrop-blur-sm p-8 rounded-xl hover:shadow-xl transition-all duration-300">
+              <h2 className="text-2xl font-bold text-yellow-400 mb-6">
+                Experience Highlights
+              </h2>
+              <div className="space-y-4">
+                <div className="border-l-2 border-yellow-400 pl-4">
+                  <h3 className="text-white font-semibold">
+                    Software Developer
+                  </h3>
+                  <p className="text-gray-400">
+                    Prysom systems • FEB-24 - Present
+                  </p>
+                  <p className="text-gray-300 mt-2">
+                    - Developed and maintained web applications using React JS
+                  </p>
+                </div>
+                {/* Add more experience items */}
+              </div>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Technologies */}
+        <motion.div
+          className="mt-16"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
+        >
+          <h2 className="text-2xl font-bold text-yellow-400 text-center mb-8">
+            Technologies I Work With
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {technologies.map((tech, index) => (
+              <motion.div
+                key={index}
+                className="bg-[#222]/50 p-4 rounded-lg text-center hover:bg-[#2a2a2a]/50 transition-all"
+                whileHover={{ scale: 1.05 }}
+              >
+                <span className="text-white">{tech}</span>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       </div>
-    </>
+    </div>
   );
 }
+
+const technologies = [
+  "React.js",
+  "Next.js",
+  "Node.js",
+  "TypeScript",
+  "Redux Toolkit",
+  "TailwindCSS",
+  "MongoDB",
+  "Git",
+  // Add more technologies
+];

@@ -33,7 +33,7 @@ export default function Sidebar({ children }) {
 
   return (
     <>
-      <div className="flex h-screen ">
+      <div className="flex">
         <div className="lg:hidden p-4">
           <button onClick={() => setIsOpen(!isOpen)} className="text-black">
             {isOpen ? <CloseIcon size={24} /> : <Hamburger size={24} />}

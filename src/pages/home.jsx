@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { BoxGeometry, MeshPhongMaterial, Mesh } from "three";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -35,22 +36,31 @@ export default function Home() {
       return;
     }
 
-    // Optimized galaxy parameters
+    // Updated galaxy parameters with golden theme
     const parameters = {
-      count: 5000,
-      size: 0.02,
-      radius: 5,
-      branches: 3,
-      spin: 1,
+      count: 8000,
+      size: 0.015,
+      radius: 6,
+      branches: 4,
+      spin: 1.5,
       randomness: 0.2,
       randomnessPower: 3,
-      insideColor: "#FFD700",
-      outsideColor: "#FFFFFF",
+      insideColor: "#FFD700", // Golden yellow
+      outsideColor: "#FFFFFF", // White
+      mouseInteraction: true,
     };
 
     let geometry = null;
     let material = null;
     let points = null;
+    let mouse = new THREE.Vector2();
+
+    // Add mouse move handler
+    const onMouseMove = (event) => {
+      mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    };
+    window.addEventListener("mousemove", onMouseMove);
 
     const generateGalaxy = () => {
       if (points !== null) {
@@ -137,10 +147,100 @@ export default function Home() {
     };
     window.addEventListener("resize", handleResize);
 
-    // Simplified animation loop
+    // Declare shapes array at the top of useEffect
+    const shapes = [];
+
+    // Updated floating shapes with golden theme
+    const createFloatingShapes = () => {
+      const geometries = [
+        new BoxGeometry(0.5, 0.5, 0.5),
+        new THREE.TorusGeometry(0.3, 0.1, 16, 32),
+        new THREE.OctahedronGeometry(0.3),
+        new THREE.TetrahedronGeometry(0.3),
+      ];
+
+      const colors = [
+        "#FFD700", // Golden yellow
+        "#FFF8DC", // Cream white
+        "#FFDF00", // Golden
+        "#FFFAF0", // Floral white
+        "#DAA520", // Goldenrod
+      ];
+
+      for (let i = 0; i < 10; i++) {
+        const geometry =
+          geometries[Math.floor(Math.random() * geometries.length)];
+        const material = new MeshPhongMaterial({
+          color: new THREE.Color(
+            colors[Math.floor(Math.random() * colors.length)]
+          ),
+          transparent: true,
+          opacity: 0.7,
+          side: THREE.DoubleSide,
+          metalness: 0.5,
+          roughness: 0.2,
+        });
+
+        const shape = new Mesh(geometry, material);
+
+        // Random positions around the scene
+        shape.position.set(
+          (Math.random() - 0.5) * 10,
+          (Math.random() - 0.5) * 10,
+          (Math.random() - 0.5) * 10
+        );
+
+        // Add random rotation speeds
+        shape.userData = {
+          rotationSpeed: {
+            x: (Math.random() - 0.5) * 0.02,
+            y: (Math.random() - 0.5) * 0.02,
+            z: (Math.random() - 0.5) * 0.02,
+          },
+          floatSpeed: Math.random() * 0.005,
+          floatOffset: Math.random() * Math.PI * 2,
+        };
+
+        shapes.push(shape);
+        scene.add(shape);
+      }
+    };
+
+    createFloatingShapes();
+
+    // Updated lighting for golden theme
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+    scene.add(ambientLight);
+
+    const directionalLight = new THREE.DirectionalLight(0xffd700, 1); // Golden tinted light
+    directionalLight.position.set(2, 2, 5);
+    scene.add(directionalLight);
+
+    // Updated animation loop with mouse interaction
     let animationFrameId;
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
+
+      if (points) {
+        points.rotation.y += 0.001;
+        if (parameters.mouseInteraction) {
+          points.rotation.x += mouse.y * 0.0005;
+          points.rotation.y += mouse.x * 0.0005;
+        }
+      }
+
+      // Animate floating shapes
+      shapes.forEach((shape, i) => {
+        // Rotation
+        shape.rotation.x += shape.userData.rotationSpeed.x;
+        shape.rotation.y += shape.userData.rotationSpeed.y;
+        shape.rotation.z += shape.userData.rotationSpeed.z;
+
+        // Floating motion
+        const time = Date.now() * shape.userData.floatSpeed;
+        shape.position.y += Math.sin(time + shape.userData.floatOffset) * 0.002;
+      });
+
       controls.update();
       renderer.render(scene, camera);
     };
@@ -158,31 +258,42 @@ export default function Home() {
       renderer.dispose();
       controls.dispose();
       window.removeEventListener("resize", handleResize);
+      window.removeEventListener("mousemove", onMouseMove);
       if (containerRef.current && renderer.domElement) {
         containerRef.current.removeChild(renderer.domElement);
       }
+      shapes.forEach((shape) => {
+        shape.geometry.dispose();
+        shape.material.dispose();
+        scene.remove(shape);
+      });
     };
   }, []);
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-black">
+    <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-black via-gray-900 to-black">
       <div ref={containerRef} className="absolute top-0 left-0 w-full h-full" />
-      {/* Content */}
+
+      {/* Updated UI Overlay with golden gradient */}
+      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black/50 via-transparent to-black/50" />
+
       <div className="relative z-10 flex flex-col items-center justify-center h-screen px-4">
         <div className="max-w-4xl text-center space-y-8">
-          <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tight">
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-white">
-              Turning Vision Into Reality
+          {/* Updated heading with golden gradient */}
+          <h1 className="text-2xl md:text-7xl font-bold text-white tracking-tight">
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-yellow-300 to-white">
+              Hello, I'm a Rajjak
             </span>
           </h1>
 
+          {/* Updated typed text color */}
           <h2 className="text-2xl md:text-4xl font-bold text-white/90">
-            I'm{" "}
+            I create{" "}
             <ReactTyped
               strings={[
-                "a Software Developer",
-                "a Problem Solver",
-                "an Innovation Enthusiast",
+                "modern web applications",
+                "scalable applications",
+                "innovative solutions",
               ]}
               typeSpeed={50}
               backSpeed={60}
@@ -191,36 +302,46 @@ export default function Home() {
             />
           </h2>
 
-          <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto leading-relaxed">
-            Crafting innovative digital solutions through elegant code and
-            intuitive design. Specializing in building scalable web applications
-            that deliver exceptional user experiences.
-          </p>
+          {/* Updated glass-morphism card */}
+          <div className="backdrop-blur-lg bg-white/10 p-4 rounded-2xl border border-yellow-400/20 max-w-2xl mx-auto">
+            <p className="text-md md:text-md text-white/80 leading-relaxed">
+              Dynamic Front-End Developer specializing in React, Next.js, and
+              Redux Toolkit, with 1 year of hands-on experience building
+              responsive, high-performing, and user-friendly web applications.
+              Passionate about crafting seamless UI/UX experiences with
+              cutting-edge tools and technologies.
+            </p>
+          </div>
 
+          {/* Updated buttons with golden styling */}
           <div className="flex items-center justify-center space-x-6">
             <button
-              onClick={() => navigate("/projects")}
+              onClick={() => navigate("/Portfolio")}
               className="px-8 py-3 text-lg font-semibold text-black bg-yellow-400 
-              hover:bg-yellow-500 rounded-lg transform hover:scale-105 transition-all duration-300"
+              hover:bg-yellow-300 rounded-xl transform hover:scale-105 transition-all duration-300
+              shadow-lg shadow-yellow-400/20"
             >
               View Projects
             </button>
             <button
               onClick={() => navigate("/contact")}
               className="px-8 py-3 text-lg font-semibold text-yellow-400 border-2 
-              border-yellow-400 hover:bg-yellow-400 hover:text-black rounded-lg 
-              transform hover:scale-105 transition-all duration-300"
+              border-yellow-400 hover:bg-yellow-400 hover:text-black rounded-xl 
+              transform hover:scale-105 transition-all duration-300
+              backdrop-blur-lg shadow-lg shadow-yellow-400/20"
             >
               Contact Me
             </button>
           </div>
 
+          {/* Updated social links with golden hover effects */}
           <div className="flex justify-center space-x-6 pt-8">
             <a
               href="https://github.com/yourusername"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white/80 hover:text-yellow-400 transform hover:scale-110 transition-all duration-300"
+              className="text-white/80 hover:text-yellow-400 transform hover:scale-110 
+              transition-all duration-300 hover:rotate-12"
             >
               <FaGithub size={30} />
             </a>
@@ -228,7 +349,8 @@ export default function Home() {
               href="https://linkedin.com/in/yourusername"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white/80 hover:text-yellow-400 transform hover:scale-110 transition-all duration-300"
+              className="text-white/80 hover:text-yellow-400 transform hover:scale-110 
+              transition-all duration-300 hover:rotate-12"
             >
               <FaLinkedin size={30} />
             </a>

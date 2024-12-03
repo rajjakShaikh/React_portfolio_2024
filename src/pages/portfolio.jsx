@@ -77,7 +77,6 @@ export default function Portfolio() {
           </p>
         </div>
 
-        {/* Projects Grid */}
         <div className="space-y-32">
           {/* Project 1 */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
@@ -123,8 +122,53 @@ export default function Portfolio() {
               />
             </div>
           </div>
+          {/* Project 2*/}
 
-          {/* Project 2 */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div className="space-y-6">
+              <span className="text-yellow-400 text-sm font-semibold tracking-wider">
+                FEATURED PROJECT
+              </span>
+              <h2 className="text-3xl font-bold text-white">
+                NPCI Admin, issuer,corporate Portal
+              </h2>
+              <p className="text-gray-300 text-lg leading-relaxed">
+                A modern food delivery platform featuring an intuitive user
+                interface, real-time order tracking, and seamless payment
+                integration. The project showcases advanced React patterns,
+                custom animations, and responsive design principles.
+              </p>
+              <div className="flex gap-4">
+                <span className="text-yellow-400 text-sm">React</span>
+                <span className="text-yellow-400 text-sm">Tailwind CSS</span>
+                <span className="text-yellow-400 text-sm">Firebase</span>
+              </div>
+              <a
+                href="https://flavourfusioncafe.netlify.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Buttonwobble
+                  module="View Project"
+                  className="!px-6 !py-3 text-lg font-medium hover:scale-105 transition-transform"
+                />
+              </a>
+            </div>
+            <div className="grid grid-cols-2 gap-4 hover:scale-105 transition-transform">
+              <img
+                src="/images/fla1.png"
+                alt="Flavour Fusion Screenshot 1"
+                className="w-full rounded-lg shadow-xl"
+              />
+              <img
+                src="/images/fla2.png"
+                alt="Flavour Fusion Screenshot 2"
+                className="w-full rounded-lg shadow-xl"
+              />
+            </div>
+          </div>
+
+          {/* Project 3 */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
               <span className="text-yellow-400 text-sm font-semibold tracking-wider">

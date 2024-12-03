@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { motion } from "framer-motion";
+import Buttonwobble from "./buttonwobble";
+import { FaDownload } from "react-icons/fa";
 
 export default function About() {
   const mountRef = useRef(null);
@@ -168,6 +170,16 @@ export default function About() {
     transition: { duration: 0.6 },
   };
 
+  const handleDownload = () => {
+    // Create a link element
+    const link = document.createElement("a");
+    link.href = "/public/resumesoftware_Dev_2024.pdf"; // Replace with your actual resume path
+    link.download = "Software_Dev_Resume.pdf"; // Replace with desired download filename
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <div className="relative min-h-screen bg-gradient-to-b from-[#0a0a0a] via-[#111827] to-[#1a1a1a]">
       <div ref={mountRef} className="absolute inset-0 -z-10" />
@@ -229,6 +241,26 @@ export default function About() {
                   </span>
                 </h1>
               </div>
+              <div className="bg-[#1a1a1a]/50 backdrop-blur-sm p-8 rounded-xl hover:shadow-xl transition-all duration-300">
+                <h1 className="text-white font-medium text-[18px] mb-3">
+                  Hobbies:{" "}
+                  <span className="font-medium text-yellow-400 text-[18px]">
+                    Coding | Reading | Traveling | Photography
+                  </span>
+                </h1>
+              </div>
+              <div className="flex justify-center">
+                <button
+                  onClick={handleDownload}
+                  className="text-white group border-2 border-[#ffd700] rounded-2xl px-6 py-3 my-2 flex items-center 
+      hover:bg-[#ffd700] hover:text-black transition-all duration-300"
+                >
+                  Download Resume
+                  <span className="ml-3 group-hover:rotate-12 transition-transform duration-300">
+                    <FaDownload />
+                  </span>
+                </button>
+              </div>
             </div>
           </motion.div>
 
@@ -246,14 +278,42 @@ export default function About() {
                   <h3 className="text-white font-semibold">
                     Software Developer
                   </h3>
-                  <p className="text-gray-400">
-                    Prysom systems • FEB-24 - Present
+                  <p className="text-yellow-400">
+                    Prysom systems (Pune) • FEB-24 - Present
                   </p>
                   <p className="text-gray-300 mt-2">
-                    - Developed and maintained web applications using React JS
+                    - Spearheaded the development of dynamic and responsive user
+                    interfaces using React.js redux toolkit, ensuring seamless
+                    user experiences across devices. <br />- Collaborated
+                    closely with backend teams to discuss API structures,
+                    optimize integrations, and efficiently implement
+                    functionality on the frontend. <br /> - Designed reusable
+                    and modular components, improving code maintainability and
+                    accelerating development for future projects. <br /> -
+                    Conducted rigorous testing and debugging to ensure high
+                    performance and compatibility across multiple browsers and
+                    platforms. <br /> - Actively participated in agile
+                    workflows, contributing to sprint planning, code reviews,
+                    and knowledge-sharing sessions to enhance team productivity.
                   </p>
                 </div>
-                {/* Add more experience items */}
+              </div>
+              <div className="space-y-4 mt-5">
+                <div className="border-l-2 border-yellow-400 pl-4">
+                  <h3 className="text-white font-semibold">
+                    Front end developer
+                  </h3>
+                  <p className="text-yellow-500">
+                    Omegasoft Technologies Pvt Ltd (Pune) · Internship • AUG-22
+                    - JAN-23
+                  </p>
+                  <p className="text-gray-300 mt-2">
+                    During my internship, I gained hands-on experience in
+                    developing dynamic and responsive user interfaces using
+                    React.js and Redux Toolkit, enhancing user experiences
+                    across devices. also i work in wordpress and php.
+                  </p>
+                </div>
               </div>
             </div>
           </motion.div>
@@ -292,8 +352,9 @@ const technologies = [
   "Node.js",
   "TypeScript",
   "Redux Toolkit",
+  "Crypto JS",
   "TailwindCSS",
   "MongoDB",
   "Git",
-  // Add more technologies
+  "GitLab",
 ];

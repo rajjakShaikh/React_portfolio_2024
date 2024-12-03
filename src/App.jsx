@@ -4,12 +4,12 @@ import Sidebar from "./pages/sidebar";
 import About from "./pages/about";
 import Contact from "./pages/contact";
 import Portfolio from "./pages/portfolio";
-import DotRing from "./pages/DotRing";
+// import DotRing from "./pages/DotRing";
 
 function App() {
   return (
     <div className="cursor-none">
-      <DotRing />
+      {/* <DotRing /> */}
       <Sidebar>
         <Routes>
           <Route path="/" element={<Home />} />

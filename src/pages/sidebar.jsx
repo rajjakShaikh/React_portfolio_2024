@@ -33,8 +33,8 @@ export default function Sidebar({ children }) {
 
   return (
     <>
-      <div className="flex">
-        <div className="lg:hidden p-4">
+      <div className="flex h-screen cursor-pointer">
+        <div className="lg:hidden fixed top-0 left-0 p-4 z-50">
           <button onClick={() => setIsOpen(!isOpen)} className="text-black">
             {isOpen ? <CloseIcon size={24} /> : <Hamburger size={24} />}
           </button>
@@ -44,7 +44,7 @@ export default function Sidebar({ children }) {
         <div
           className={`${
             isOpen ? "block" : "hidden"
-          } lg:block bg-[#1a1a1a] w-1/5 p-4 lg:p-0 lg:relative lg:inset-y-0 lg:flex-col lg:h-auto fixed h-screen lg:text-center`}
+          } lg:block bg-[#1a1a1a] w-1/5 min-h-screen fixed lg:sticky top-0 overflow-y-auto cursor-event-pointer`}
         >
           <div>
             <img
@@ -53,7 +53,7 @@ export default function Sidebar({ children }) {
               className="img-user w-[80] h-auto"
             />
           </div>
-          <div className="">
+          <div className="text-center">
             <h2 className="text-white font-medium text-lg">Rajjak Shaikh</h2>
             <h3 className="post">Software Developer</h3>
           </div>
@@ -73,13 +73,21 @@ export default function Sidebar({ children }) {
             <p className="font-medium">Follow me</p>
             <div className="grid grid-flow-col gap-8 justify-center py-2">
               <div className="flex justify-center">
-                <FaLinkedin className="text-blue-600 text-2xl" />
+                <a
+                  href="https://www.linkedin.com/in/rajjak-shaikh-271216243/"
+                  target="_blank"
+                >
+                  <FaLinkedin className="text-blue-600 text-2xl" />
+                </a>
               </div>
               <div className="flex justify-center">
                 <BsInstagram className="text-2xl" />
               </div>
               <div className="flex justify-center">
-                <a href="https://github.com/rajjakShaikh/Redux_Toolkit_New">
+                <a
+                  href="https://github.com/rajjakShaikh/Redux_Toolkit_New"
+                  target="_blank"
+                >
                   <FaGithubSquare className="text-2xl" />
                 </a>
               </div>
@@ -87,7 +95,7 @@ export default function Sidebar({ children }) {
           </div>
         </div>
 
-        <div className="flex-1 justify-center">
+        <div className="flex-1 ml-0 overflow-y-auto px-5">
           <main>{children}</main>
         </div>
       </div>

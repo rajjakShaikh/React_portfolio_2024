@@ -271,8 +271,11 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-black via-gray-900 to-black">
-      <div ref={containerRef} className="absolute top-0 left-0 w-full h-full" />
+    <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-black via-gray-900 to-black cursor-pointer">
+      <div
+        ref={containerRef}
+        className="absolute top-0 left-0 w-full h-full pointer-events-auto"
+      />
 
       {/* Updated UI Overlay with golden gradient */}
       <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black/50 via-transparent to-black/50" />
@@ -291,14 +294,17 @@ export default function Home() {
             I create{" "}
             <ReactTyped
               strings={[
-                "modern web applications",
-                "scalable applications",
-                "innovative solutions",
+                "modern web applications^1000",
+                "scalable applications^1000",
+                "innovative solutions^1000",
               ]}
               typeSpeed={50}
               backSpeed={60}
               className="text-yellow-400"
               loop
+              cursorChar="|"
+              showCursor={true}
+              cursorClassName="text-yellow-400 animate-pulse"
             />
           </h2>
 

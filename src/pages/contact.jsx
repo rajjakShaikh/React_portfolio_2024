@@ -53,11 +53,11 @@ export default function Contact() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#1a1a1a] to-[#2a2a2a]">
+    <div className="bg-gradient-to-b from-[#1a1a1a] to-[#2a2a2a] cursor-auto">
       {/* 3D Background */}
       <div
         ref={canvasRef}
-        className="absolute top-0 right-0 w-1/2 h-full opacity-30"
+        className="absolute top-0 right-0 w-1/2 h-full opacity-30 cursor-events-auto"
       />
 
       <div className="container mx-auto px-4 py-16">
@@ -139,7 +139,7 @@ export default function Contact() {
             </ul>
 
             {/* Additional Content */}
-            <div className="mt-12">
+            {/* <div className="mt-12">
               <h3 className="text-xl font-bold text-white mb-4">
                 Office Hours
               </h3>
@@ -148,7 +148,7 @@ export default function Contact() {
                 <li>Saturday: 10:00 AM - 4:00 PM</li>
                 <li>Sunday: Closed</li>
               </ul>
-            </div>
+            </div> */}
           </div>
 
           {/* Right Column - Contact Form */}

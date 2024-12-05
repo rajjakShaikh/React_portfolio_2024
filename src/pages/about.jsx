@@ -171,7 +171,6 @@ export default function About() {
   };
 
   const handleDownload = () => {
-    // Create a link element
     const link = document.createElement("a");
     link.href = "/public/resumesoftware_Dev_2024.pdf"; // Replace with your actual resume path
     link.download = "Software_Dev_Resume.pdf"; // Replace with desired download filename
@@ -181,8 +180,11 @@ export default function About() {
   };
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-b from-[#0a0a0a] via-[#111827] to-[#1a1a1a]">
-      <div ref={mountRef} className="absolute inset-0 -z-10" />
+    <div className="relative min-h-screen bg-gradient-to-b from-[#0a0a0a] via-[#111827] to-[#1a1a1a] cursor-pointer">
+      <div
+        ref={mountRef}
+        className="absolute inset-0 -z-10 pointer-events-auto"
+      />
 
       <div className="container mx-auto px-4 py-10 relative z-10">
         <motion.div

@@ -23,6 +23,14 @@ export default function Portfolio() {
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
     canvasRef.current.appendChild(renderer.domElement);
+    renderer.domElement.style.position = "absolute";
+    renderer.domElement.style.top = "0";
+    renderer.domElement.style.left = "0";
+    renderer.domElement.style.width = "100%";
+    renderer.domElement.style.height = "100%";
+
+    // Hide overflow to prevent horizontal scrollbar
+    document.body.style.overflow = "hidden";
 
     // Create particles
     const particlesGeometry = new THREE.BufferGeometry();
@@ -149,6 +157,7 @@ export default function Portfolio() {
       particlesMaterial.dispose();
       scene.remove(particlesMesh);
       ambientLight.dispose();
+      document.body.style.overflow = "auto"; // Reset overflow on cleanup
     };
   }, []);
 
@@ -156,9 +165,8 @@ export default function Portfolio() {
     <div className="relative min-h-screen cursor-pointer">
       <div
         ref={canvasRef}
-        className="absolute inset-0 -z-10 pointer-events-auto"
+        className="absolute inset-0 -z-10 pointer-events-none"
       />
-
       {/* Content */}
       <div className="relative z-10 px-8 py-16 max-w-7xl mx-auto">
         <div className="text-center mb-20">
@@ -172,50 +180,6 @@ export default function Portfolio() {
         </div>
 
         <div className="space-y-32">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <span className="text-yellow-400 text-sm font-semibold tracking-wider">
-                FEATURED PROJECT
-              </span>
-              <h2 className="text-3xl font-bold text-white">
-                Flavour Fusion Café
-              </h2>
-              <p className="text-gray-300 text-lg leading-relaxed">
-                A modern food delivery platform featuring an intuitive user
-                interface, real-time order tracking, and seamless payment
-                integration. The project showcases advanced React patterns,
-                custom animations, and responsive design principles.
-              </p>
-              <div className="flex gap-4">
-                <span className="text-yellow-400 text-sm">React</span>
-                <span className="text-yellow-400 text-sm">Tailwind CSS</span>
-                <span className="text-yellow-400 text-sm">Firebase</span>
-              </div>
-              <a
-                href="https://flavourfusioncafe.netlify.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Buttonwobble
-                  module="View Project"
-                  className="!px-6 !py-3 text-lg font-medium hover:scale-105 transition-transform"
-                />
-              </a>
-            </div>
-            <div className="grid grid-cols-2 gap-4 hover:scale-105 transition-transform">
-              <img
-                src="/images/fla1.png"
-                alt="Flavour Fusion Screenshot 1"
-                className="w-full rounded-lg shadow-xl"
-              />
-              <img
-                src="/images/fla2.png"
-                alt="Flavour Fusion Screenshot 2"
-                className="w-full rounded-lg shadow-xl"
-              />
-            </div>
-          </div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
               <span className="text-yellow-400 text-sm font-semibold tracking-wider">
@@ -246,17 +210,34 @@ export default function Portfolio() {
                 />
               </a>
             </div>
-            <div className="grid grid-cols-2 gap-4 hover:scale-105 transition-transform">
-              <img
-                src="/images/fla1.png"
-                alt="Flavour Fusion Screenshot 1"
-                className="w-full rounded-lg shadow-xl"
-              />
-              <img
-                src="/images/fla2.png"
-                alt="Flavour Fusion Screenshot 2"
-                className="w-full rounded-lg shadow-xl"
-              />
+            <div className="space-y-6">
+              <span className="text-yellow-400 text-sm font-semibold tracking-wider">
+                FEATURED PROJECT
+              </span>
+              <h2 className="text-3xl font-bold text-white">
+                Flavour Fusion Café
+              </h2>
+              <p className="text-gray-300 text-lg leading-relaxed">
+                A modern food delivery platform featuring an intuitive user
+                interface, real-time order tracking, and seamless payment
+                integration. The project showcases advanced React patterns,
+                custom animations, and responsive design principles.
+              </p>
+              <div className="flex gap-4">
+                <span className="text-yellow-400 text-sm">React</span>
+                <span className="text-yellow-400 text-sm">Tailwind CSS</span>
+                <span className="text-yellow-400 text-sm">Firebase</span>
+              </div>
+              <a
+                href="https://flavourfusioncafe.netlify.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Buttonwobble
+                  module="View Project"
+                  className="!px-6 !py-3 text-lg font-medium hover:scale-105 transition-transform"
+                />
+              </a>
             </div>
           </div>
         </div>

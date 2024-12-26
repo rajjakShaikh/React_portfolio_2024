@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import Hamburger from "../svg/hamburger";
 import CloseIcon from "../svg/closeicon";
@@ -33,18 +33,17 @@ export default function Sidebar({ children }) {
 
   return (
     <>
-      <div className="flex h-screen cursor-pointer">
+      <div className="flex h-screen cursor-pointer relative">
         <div className="lg:hidden fixed top-0 left-0 p-4 z-50">
           <button onClick={() => setIsOpen(!isOpen)} className="text-black">
             {isOpen ? <CloseIcon size={24} /> : <Hamburger size={24} />}
           </button>
         </div>
 
-        {/* Sidebar */}
         <div
           className={`${
-            isOpen ? "block" : "hidden"
-          } lg:block bg-[#1a1a1a] w-1/5 min-h-screen fixed lg:sticky top-0 overflow-y-auto cursor-event-pointer`}
+            isOpen ? "translate-x-0" : "-translate-x-full"
+          } lg:translate-x-0 fixed lg:sticky top-0 left-0 bg-[#1a1a1a] w-64 lg:w-1/5 min-h-screen transition-transform duration-300 ease-in-out z-40`}
         >
           <div>
             <img
@@ -95,7 +94,7 @@ export default function Sidebar({ children }) {
           </div>
         </div>
 
-        <div className="flex-1 ml-0 overflow-y-auto">
+        <div className="flex-1 lg:ml-[20%] overflow-y-auto">
           <main>{children}</main>
         </div>
       </div>

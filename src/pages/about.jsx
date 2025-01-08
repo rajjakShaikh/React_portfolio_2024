@@ -1,7 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { motion } from "framer-motion";
-import Buttonwobble from "./buttonwobble";
 import { FaDownload } from "react-icons/fa";
 
 export default function About() {
@@ -38,7 +37,7 @@ export default function About() {
       opacity: 0.8,
     });
 
-    const particlesCount = 15000;
+    const particlesCount = 10000;
     const positions = new Float32Array(particlesCount * 3);
     const colors = new Float32Array(particlesCount * 3);
 
@@ -90,7 +89,7 @@ export default function About() {
     camera.position.y = 1;
 
     // Add floating particles
-    const floatingParticlesCount = 2000;
+    const floatingParticlesCount = 1000;
     const floatingGeometry = new THREE.BufferGeometry();
     const floatingPositions = new Float32Array(floatingParticlesCount * 3);
 
@@ -172,18 +171,18 @@ export default function About() {
 
   const handleDownload = () => {
     const link = document.createElement("a");
-    link.href = "/public/resumesoftware_Dev_2024.pdf"; // Replace with your actual resume path
-    link.download = "Software_Dev_Resume.pdf"; // Replace with desired download filename
+    link.href = "SoftwareDevResumeRajjak_25.pdf"; // Replace with your actual resume path
+    link.download = "SoftwareDevResumeRajjak_25.pdf"; // Replace with desired download filename
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-b from-[#0a0a0a] via-[#111827] to-[#1a1a1a] cursor-pointer">
+    <div className="relative overflow-x-hidden min-h-screen bg-transparent cursor-pointer">
       <div
         ref={mountRef}
-        className="absolute inset-0 -z-10 pointer-events-auto"
+        className="absolute inset-0 z-10 pointer-events-none"
       />
 
       <div className="container mx-auto px-4 py-10 relative z-10">
@@ -193,8 +192,8 @@ export default function About() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h1 className="text-[50px] font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 mb-6 drop-shadow-lg">
-            About Me
+          <h1 className="text-6xl font-bold text-white mb-4">
+            About <span className="text-yellow-400">Me</span>
           </h1>
           <p className="text-gray-300 text-xl max-w-3xl mx-auto leading-relaxed">
             Passionate software developer with a focus on creating elegant
@@ -239,7 +238,7 @@ export default function About() {
                   <span className="font-medium text-yellow-400 text-[18px]">
                     Javascript | React JS | Next JS | Redux Toolkit | TanStack
                     Query | Html5 | CSS | Tailwind CSS | Bootstrap5 | Github |
-                    Wordpress | PHP
+                    Wordpress | PHP | Shopify
                   </span>
                 </h1>
               </div>
@@ -251,10 +250,15 @@ export default function About() {
                   </span>
                 </h1>
               </div>
+              <div>
+                <p className="text-white  text-center font-sm  mb-3">
+                  For more information 👇
+                </p>
+              </div>
               <div className="flex justify-center">
                 <button
                   onClick={handleDownload}
-                  className="text-white group border-2 border-[#ffd700] rounded-2xl px-6 py-3 my-2 flex items-center 
+                  className="text-white animate-bounce group border-2 border-[#ffd700] rounded-2xl px-6 py-3 my-2 flex items-center 
       hover:bg-[#ffd700] hover:text-black transition-all duration-300"
                 >
                   Download Resume
@@ -335,7 +339,7 @@ export default function About() {
             {technologies.map((tech, index) => (
               <motion.div
                 key={index}
-                className="bg-[#222]/50 p-4 rounded-lg text-center hover:bg-[#2a2a2a]/50 transition-all"
+                className="bg-[#222]/50 hover:bg-yellow-500 hover:opacity-80 p-4 rounded-lg text-center hover:bg-[#2a2a2a]/50 transition-all"
                 whileHover={{ scale: 1.05 }}
               >
                 <span className="text-white">{tech}</span>
@@ -356,6 +360,7 @@ const technologies = [
   "Redux Toolkit",
   "Crypto JS",
   "TailwindCSS",
+  "Bootstrap5",
   "MongoDB",
   "Git",
   "GitLab",

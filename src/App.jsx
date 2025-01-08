@@ -5,6 +5,7 @@ import About from "./pages/about";
 import Contact from "./pages/contact";
 import Portfolio from "./pages/portfolio";
 // import DotRing from "./pages/DotRing";
+import SecurityMessage from "./pages/securitypage";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/portfolio" element={<Portfolio />} />
+          <Route path="/SecurityMessage" element={<SecurityMessage />} />
         </Routes>
       </Sidebar>
     </div>

@@ -94,7 +94,7 @@ export default function Sidebar({ children }) {
           </div>
         </div>
 
-        <div className="flex-1 lg:ml-[20%] overflow-y-auto">
+        <div className="flex-1 overflow-y-auto">
           <main>{children}</main>
         </div>
       </div>

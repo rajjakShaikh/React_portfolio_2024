@@ -1,11 +1,12 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
-// import { useNavigate } from "react-router-dom";
 import Buttonwobble from "./buttonwobble";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Portfolio() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const canvasRef = useRef(null);
+  const [isExpanded, setIsExpanded] = useState([false, false, false]);
 
   useEffect(() => {
     const scene = new THREE.Scene();
@@ -160,6 +161,18 @@ export default function Portfolio() {
       document.body.style.overflow = "auto"; // Reset overflow on cleanup
     };
   }, []);
+  const handleReadMore = (index) => {
+    setIsExpanded((prev) => {
+      const newExpanded = [...prev];
+      newExpanded[index] = !newExpanded[index];
+      return newExpanded;
+    });
+  };
+
+  const handlenavigate = () => {
+    console.log("button is click");
+    navigate("/SecurityMessage");
+  };
 
   return (
     <div className="relative min-h-screen cursor-pointer">
@@ -181,61 +194,285 @@ export default function Portfolio() {
 
         <div className="space-y-32">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            {/* 1st project npci */}
             <div className="space-y-6">
               <span className="text-yellow-400 text-sm font-semibold tracking-wider">
                 FEATURED PROJECT
               </span>
-              <h2 className="text-3xl font-bold text-white">
-                NPCI Admin, issuer,corporate Portal
+              <h2 className="text-xl font-bold text-white">
+                National Payments Corporation of India (NPCI)
               </h2>
-              <p className="text-gray-300 text-lg leading-relaxed">
-                A modern food delivery platform featuring an intuitive user
-                interface, real-time order tracking, and seamless payment
-                integration. The project showcases advanced React patterns,
-                custom animations, and responsive design principles.
+              <p
+                className={`text-gray-300 text-lg ${
+                  isExpanded[0] ? "" : "max-h-28 overflow-hidden"
+                }`}
+              >
+                Developed a robust NPCI Portal system with three modules: Admin
+                Portal, Issuer Portal, and Corporate Portal, using React JS,
+                Tailwind CSS, Axios, and Redux Toolkit. The Admin Portal allows
+                onboarding of banks as issuers, while the Issuer Portal manages
+                corporate accounts, and the Corporate Portal adds and manages
+                employees. Integrated crypto-js for secure data handling,
+                Chart.js for data visualization, and Formik for form validation.
+                Designed with dynamic routing and a fully responsive grid
+                layout, ensuring seamless navigation and usability across
+                devices. This project demonstrates expertise in secure,
+                scalable, and responsive web applications.
               </p>
-              <div className="flex gap-4">
-                <span className="text-yellow-400 text-sm">React</span>
+              <button
+                onClick={() => handleReadMore(0)}
+                className="text-yellow-400 outline outline-1 p-2 rounded-2xl text-sm"
+              >
+                Read more...
+              </button>
+              <div className="grid grid-cols-5">
+                <div className="text-yellow-400 text-sm">React,</div>
+                <div className="text-yellow-400 text-sm">Tailwind CSS,</div>
+                <div className="text-yellow-400 text-sm">Redux toolkit,</div>
+                <div className="text-yellow-400 text-sm">Crypto js,</div>
+                <div className="text-yellow-400 text-sm">Formik,</div>
+                <div className="text-yellow-400 text-sm">Axios,</div>
+                <div className="text-yellow-400 text-sm">Chart js,</div>
+                <div className="text-yellow-400 text-sm">Gitlab,</div>
+              </div>
+
+              <Buttonwobble
+                module="View Project"
+                onClick={handlenavigate}
+                className="!py-2 mt-4 text-lg font-medium hover:scale-105 transition-transform"
+              />
+            </div>
+
+            {/* 2nd project Kickitup shoes react */}
+            <div className="space-y-6 mt-2">
+              <span className="text-yellow-400 text-sm font-semibold tracking-wider">
+                FEATURED PROJECT
+              </span>
+              <h2 className="text-xl pt-2 font-bold text-white">
+                KickItUp E-commerce shoes Store{" "}
+              </h2>
+              <p
+                className={`text-gray-300 text-lg ${
+                  isExpanded[1] ? "" : "max-h-28 overflow-hidden"
+                }`}
+              >
+                Developed a modern and responsive Shoe Store Website using React
+                JS, Redux Toolkit, and Tailwind CSS, featuring a sleek and
+                user-friendly interface. The website includes functionality for
+                adding products to a cart with real-time updates, wishlist
+                management, and category-based filtering for personalized
+                browsing. It ensures seamless performance across devices with a
+                fully responsive design. Efficient state management using Redux
+                Toolkit enables smooth handling of cart and wishlist features.
+                This project demonstrates expertise in creating visually
+                appealing, functional, and dynamic e-commerce applications.
+              </p>
+              <button
+                onClick={() => handleReadMore(1)}
+                className="text-yellow-400 mt-3 outline outline-1 p-2 rounded-2xl text-sm"
+              >
+                Read more...
+              </button>
+              <div className="flex gap-4 mt-8">
+                <span className="text-yellow-400 text-sm">React JS</span>
                 <span className="text-yellow-400 text-sm">Tailwind CSS</span>
-                <span className="text-yellow-400 text-sm">Firebase</span>
+                <span className="text-yellow-400 text-sm">Redux toolkit</span>
+                <span className="text-yellow-400 text-sm">Crypto js</span>
+                <span className="text-yellow-400 text-sm">Axios</span>
+                <span className="text-yellow-400 text-sm">Github</span>
               </div>
               <a
-                href="https://flavourfusioncafe.netlify.app/"
+                href="https://KickItUp.netlify.app/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <Buttonwobble
                   module="View Project"
-                  className="!px-6 !py-3 text-lg font-medium hover:scale-105 transition-transform"
+                  className="!py-2 mt-[50px] text-lg font-medium hover:scale-105 transition-transform"
                 />
               </a>
             </div>
+
+            {/* 4rd project mediccapress */}
             <div className="space-y-6">
               <span className="text-yellow-400 text-sm font-semibold tracking-wider">
                 FEATURED PROJECT
               </span>
-              <h2 className="text-3xl font-bold text-white">
-                Flavour Fusion Café
-              </h2>
-              <p className="text-gray-300 text-lg leading-relaxed">
-                A modern food delivery platform featuring an intuitive user
-                interface, real-time order tracking, and seamless payment
-                integration. The project showcases advanced React patterns,
-                custom animations, and responsive design principles.
+              <h2 className="text-xl font-bold text-white">El Junto</h2>
+              <p
+                className={`text-gray-300 text-lg ${
+                  isExpanded[2] ? "" : "max-h-28 overflow-hidden"
+                }`}
+              >
+                Developed a simple and responsive ElJunto static website using
+                HTML, Bootstrap, and GitHub. The site provides an overview of
+                the ElJunto mobile app and includes key pages such as the Home
+                Page, Privacy Policy, and Terms of Service. Designed to ensure a
+                clean layout with seamless responsiveness for an optimal viewing
+                experience across devices. This project demonstrates expertise
+                in building lightweight and user-focused static web solutions.
               </p>
               <div className="flex gap-4">
-                <span className="text-yellow-400 text-sm">React</span>
-                <span className="text-yellow-400 text-sm">Tailwind CSS</span>
-                <span className="text-yellow-400 text-sm">Firebase</span>
+                <span className="text-yellow-400 text-sm">Html5</span>
+                <span className="text-yellow-400 text-sm">Bootstrap 5</span>
+                <span className="text-yellow-400 text-sm">javascript</span>
+                <span className="text-yellow-400 text-sm">github</span>
               </div>
+              <button
+                onClick={() => handleReadMore(2)}
+                className="text-yellow-400  outline outline-1 p-2 rounded-2xl text-sm"
+              >
+                Read more...
+              </button>
               <a
-                href="https://flavourfusioncafe.netlify.app/"
+                href="https://eljunto.com/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <Buttonwobble
                   module="View Project"
-                  className="!px-6 !py-3 text-lg font-medium hover:scale-105 transition-transform"
+                  className="!py-2 mt-4  text-lg font-medium hover:scale-105 transition-transform"
+                />
+              </a>
+            </div>
+
+            <div className="space-y-6">
+              <span className="text-yellow-400 text-sm font-semibold tracking-wider">
+                FEATURED PROJECT
+              </span>
+              <h2 className="text-xl font-bold text-white">
+                Cerave OBS Study Website
+              </h2>
+              <p
+                className={`text-gray-300 text-lg ${
+                  isExpanded[2] ? "" : "max-h-28 overflow-hidden"
+                }`}
+              >
+                Designed and developed a fully responsive and production-ready
+                website using HTML, Bootstrap, CSS, and PHP. The site is
+                optimized for performance and user experience, showcasing a
+                clean and professional layout suitable for its target audience.
+              </p>
+              <div className="flex gap-4">
+                <span className="text-yellow-400 text-sm">Html5</span>
+                <span className="text-yellow-400 text-sm">Bootstrap 5</span>
+                <span className="text-yellow-400 text-sm">Php</span>
+                <span className="text-yellow-400 text-sm">Css3</span>
+                <span className="text-yellow-400 text-sm">javascript</span>
+                <span className="text-yellow-400 text-sm">github</span>
+              </div>
+              <button
+                onClick={() => handleReadMore(2)}
+                className="text-yellow-400  outline outline-1 p-2 rounded-2xl text-sm"
+              >
+                Read more...
+              </button>
+              <a
+                href="https://cerave-obs-study.mediccapress.online/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Buttonwobble
+                  module="View Project"
+                  className="!py-2 mt-4  text-lg font-medium hover:scale-105 transition-transform"
+                />
+              </a>
+            </div>
+
+            <div className="space-y-6">
+              <span className="text-yellow-400 text-sm font-semibold tracking-wider">
+                WORDPRESS FEATURED PROJECT
+              </span>
+
+              <p
+                className={`text-gray-300 text-lg ${
+                  isExpanded[2] ? "" : "max-h-28 overflow-hidden"
+                }`}
+              >
+                Developed a fully functional WordPress website from scratch,
+                tailored to meet the client’s specific requirements. This
+                project involved creating custom themes, integrating essential
+                plugins, and ensuring responsive design for an optimal user
+                experience across all devices. The website features seamless
+                navigation, dynamic content management, and enhanced
+                performance.
+              </p>
+              <div className="grid gap-2">
+                <div>
+                  <a
+                    href="https://prysomsystems.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-yellow-400 hover:underline transition duration-200"
+                  >
+                    https://prysomsystems.com/
+                  </a>
+                </div>
+                <div>
+                  <a
+                    href="https://prysoms.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-yellow-400 hover:underline transition duration-200"
+                  >
+                    https://prysoms.com/
+                  </a>
+                </div>
+                <div>
+                  <a
+                    href="https://anomadigital.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-yellow-400 hover:underline transition duration-200"
+                  >
+                    https://anomadigital.com/
+                  </a>
+                </div>
+                <div>
+                  <a
+                    href="http://ganeshcnc.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-yellow-400 hover:underline transition duration-200"
+                  >
+                    http://ganeshcnc.com/
+                  </a>
+                </div>
+                <div>
+                  <a
+                    href="https://www.cutedgeengineering.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-yellow-400 hover:underline transition duration-200"
+                  >
+                    https://www.cutedgeengineering.com/
+                  </a>
+                </div>
+                <div>
+                  <a
+                    href="https://fabulousmaths.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-yellow-400 hover:underline transition duration-200"
+                  >
+                    https://fabulousmaths.com/
+                  </a>
+                </div>
+              </div>
+              <button
+                onClick={() => handleReadMore(2)}
+                className="text-yellow-400 outline outline-1 p-2 rounded-2xl text-sm hover:bg-yellow-400 hover:text-white transition"
+              >
+                Read more...
+              </button>
+              <a
+                href="https://cerave-obs-study.mediccapress.online/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Buttonwobble
+                  module="View Project"
+                  className="!py-2 mt-4 text-lg font-medium hover:scale-105 transition-transform"
                 />
               </a>
             </div>

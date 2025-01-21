@@ -282,7 +282,7 @@ export default function Portfolio() {
                 <span className="text-yellow-400 text-sm">Github</span>
               </div>
               <a
-                href="https://KickItUp.netlify.app/"
+                href="https://kickitup.netlify.app/"
                 target="_blank"
                 rel="noopener noreferrer"
               >

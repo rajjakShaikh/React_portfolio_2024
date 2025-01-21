@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import Buttonwobble from "./buttonwobble";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Portfolio() {
   const navigate = useNavigate();
@@ -369,6 +369,89 @@ export default function Portfolio() {
               </button>
               <a
                 href="https://cerave-obs-study.mediccapress.online/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Buttonwobble
+                  module="View Project"
+                  className="!py-2 mt-4  text-lg font-medium hover:scale-105 transition-transform"
+                />
+              </a>
+            </div>
+
+            <div className="space-y-6">
+              <span className="text-yellow-400 text-sm font-semibold tracking-wider">
+                FEATURED PROJECT
+              </span>
+              <h2 className="text-xl font-bold text-white">
+                Fibrosis calculator (MediccaPress)
+              </h2>
+              <p
+                className={`text-gray-300 text-lg ${
+                  isExpanded[2] ? "" : "max-h-28 overflow-hidden"
+                }`}
+              >
+                Developed a FIB-4 calculator using Next.js to analyze liver
+                fibrosis risk. The tool allows users to input age, AST, ALT, and
+                platelet count (with unit conversion) and calculates the FIB-4
+                score dynamically. Features include real-time validation,
+                responsive design, and a user-friendly interface for healthcare
+                professionals.
+              </p>
+              <div className="flex gap-4">
+                <span className="text-yellow-400 text-sm">Next JS</span>
+                <span className="text-yellow-400 text-sm">Tailwind CSS</span>
+                <span className="text-yellow-400 text-sm">github</span>
+              </div>
+              <button
+                onClick={() => handleReadMore(2)}
+                className="text-yellow-400  outline outline-1 p-2 rounded-2xl text-sm"
+              >
+                Read more...
+              </button>
+              <a
+                href="https://fib4byrajjak.netlify.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Buttonwobble
+                  module="View Project"
+                  className="!py-2 mt-4  text-lg font-medium hover:scale-105 transition-transform"
+                />
+              </a>
+            </div>
+
+            <div className="space-y-6">
+              <span className="text-yellow-400 text-sm font-semibold tracking-wider">
+                FEATURED PROJECT
+              </span>
+              <h2 className="text-xl font-bold text-white">
+                Katha-Mehfil (Story Station)
+              </h2>
+              <p
+                className={`text-gray-300 text-lg ${
+                  isExpanded[2] ? "" : "max-h-28 overflow-hidden"
+                }`}
+              >
+                Designed and developed a fully responsive Katha Mehfil website
+                using React.js and Tailwind CSS. The project focuses on an
+                elegant, user-friendly interface optimized for various screen
+                sizes. Currently in development, with the full design completed
+                and responsiveness implemented.
+              </p>
+              <div className="flex gap-4">
+                <span className="text-yellow-400 text-sm">React JS</span>
+                <span className="text-yellow-400 text-sm">Tailwind CSS</span>
+                <span className="text-yellow-400 text-sm">github</span>
+              </div>
+              <button
+                onClick={() => handleReadMore(2)}
+                className="text-yellow-400  outline outline-1 p-2 rounded-2xl text-sm"
+              >
+                Read more...
+              </button>
+              <a
+                href="https://kathamehfil.com/"
                 target="_blank"
                 rel="noopener noreferrer"
               >

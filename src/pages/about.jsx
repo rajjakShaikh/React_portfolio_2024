@@ -284,6 +284,7 @@ export default function About() {
                   <h3 className="text-white font-semibold">
                     Software Developer
                   </h3>
+                  
                   <p className="text-yellow-400">
                     Prysom systems (Pune) • FEB-24 - Present
                   </p>

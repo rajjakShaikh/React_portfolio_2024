@@ -5,6 +5,7 @@ import CloseIcon from "../svg/closeicon";
 import { FaLinkedin } from "react-icons/fa";
 import { BsInstagram } from "react-icons/bs";
 import { FaGithubSquare } from "react-icons/fa";
+import myimage from "../pages/images/userlogo.png";
 export default function Sidebar({ children }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -46,11 +47,7 @@ export default function Sidebar({ children }) {
           } lg:translate-x-0 fixed lg:sticky top-0 left-0 bg-[#1a1a1a] w-64 lg:w-1/5 min-h-screen transition-transform duration-300 ease-in-out z-40`}
         >
           <div>
-            <img
-              src="../../src/pages/images/userlogo.png"
-              alt="logo"
-              className="img-user w-[80] h-auto"
-            />
+            <img src={myimage} alt="logo" className="img-user w-[80] h-auto" />
           </div>
           <div className="text-center">
             <h2 className="text-white font-medium text-lg">Rajjak Shaikh</h2>

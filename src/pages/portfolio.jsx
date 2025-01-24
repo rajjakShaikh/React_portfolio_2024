@@ -462,7 +462,7 @@ export default function Portfolio() {
               </a>
             </div>
 
-            <div className="space-y-6">
+            {/* <div className="space-y-6">
               <span className="text-yellow-400 text-sm font-semibold tracking-wider">
                 WORDPRESS FEATURED PROJECT
               </span>
@@ -558,7 +558,7 @@ export default function Portfolio() {
                   className="!py-2 mt-4 text-lg font-medium hover:scale-105 transition-transform"
                 />
               </a>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

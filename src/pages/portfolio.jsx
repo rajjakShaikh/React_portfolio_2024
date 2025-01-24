@@ -410,7 +410,7 @@ export default function Portfolio() {
                 Read more...
               </button>
               <a
-                href="https://fib4byrajjak.netlify.app/"
+                href="https://fib-4-score-calculator.mediccapress.online/"
                 target="_blank"
                 rel="noopener noreferrer"
               >

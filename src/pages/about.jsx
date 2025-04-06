@@ -279,14 +279,40 @@ export default function About() {
               <h2 className="text-2xl font-bold text-yellow-400 mb-6">
                 Experience Highlights
               </h2>
+
               <div className="space-y-4">
+                <div className="border-l-2 border-yellow-400 pl-4">
+                  <h3 className="text-white font-semibold">
+                    Software Developer Executive
+                  </h3>
+
+                  <p className="text-yellow-400">
+                    SP IT SOLUTIONS LLP(Pune) • FEB-25 - Present
+                  </p>
+                  <p className="text-gray-300 mt-2">
+                    Collaborating with backend teams to integrate front-end
+                    code, ensuring robust and efficient software solutions that
+                    align with business goals. Designing and implementing
+                    dynamic user interfaces using React, Next.js, and Tailwind
+                    CSS, emphasizing clean code, modularity, and reusability to
+                    enhance maintainability and scalability. Overseeing code
+                    integration processes to guarantee seamless functionality
+                    and performance across systems. Managing project timelines
+                    and prioritizing tasks to deliver high-quality results on
+                    schedule, balancing technical excellence with strategic
+                    priorities.
+                  </p>
+                </div>
+              </div>
+
+              <div className="space-y-4 mt-5">
                 <div className="border-l-2 border-yellow-400 pl-4">
                   <h3 className="text-white font-semibold">
                     Software Developer
                   </h3>
-                  
+
                   <p className="text-yellow-400">
-                    Prysom systems (Pune) • FEB-24 - Present
+                    Prysom systems (Pune) • FEB-24 - FEB-25
                   </p>
                   <p className="text-gray-300 mt-2">
                     - Spearheaded the development of dynamic and responsive user
@@ -305,6 +331,7 @@ export default function About() {
                   </p>
                 </div>
               </div>
+
               <div className="space-y-4 mt-5">
                 <div className="border-l-2 border-yellow-400 pl-4">
                   <h3 className="text-white font-semibold">

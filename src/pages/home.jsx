@@ -311,11 +311,13 @@ export default function Home() {
           {/* Updated glass-morphism card */}
           <div className="backdrop-blur-lg bg-white/10 p-4 rounded-2xl border border-yellow-400/20 max-w-2xl mx-auto">
             <p className="text-md md:text-md text-white/80 leading-relaxed">
-              Dynamic Front-End Developer specializing in React, Next.js, and
-              Redux Toolkit, with 1 year of hands-on experience building
-              responsive, high-performing, and user-friendly web applications.
-              Passionate about crafting seamless UI/UX experiences with
-              cutting-edge tools and technologies.
+              Front-End Developer with more than one and half years of hands-on
+              experience, specializing in React | Next.js | TypeScript | Redux |
+              Zustand | Shadcn | I excel at building responsive,
+              high-performing, and user-friendly web applications that deliver
+              seamless UI/UX experiences. My passion lies in leveraging
+              cutting-edge tools and technologies to craft clean, scalable, and
+              efficient solutions that meet modern user needs.
             </p>
           </div>
 
